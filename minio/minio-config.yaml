@@ -34,3 +34,6 @@ buckets:
     policy: public
   - name: output
     policy: public
+
+
+## Please see readme.md

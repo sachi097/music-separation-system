@@ -1,0 +1,1 @@
+Instead of making use of Helm I have written minio-deployment.yaml which deploys minio to the kubernetes. Command used is: kubectl create -f minio-deployment.yaml
