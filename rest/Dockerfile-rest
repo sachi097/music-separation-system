@@ -1,0 +1,30 @@
+FROM ubuntu:22.04
+
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
+RUN DEBIAN_FRONTEND=noninteractive
+RUN add-apt-repository -y ppa:deadsnakes/ppa
+RUN apt-get install -y python3.10 curl
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+RUN curl -sSL https://install.python-poetry.org | python3.10 - --preview
+RUN apt-get install -y python3-pip
+RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade requests
+
+RUN pip3 install minio
+RUN pip3 install redis
+RUN pip3 install jsonpickle
+RUN pip3 install requests
+RUN pip3 install --upgrade setuptools
+RUN pip3 install markupsafe
+RUN pip3 install --ignore-installed flask
+
+RUN mkdir /rest
+RUN chmod -R 777 /rest
+WORKDIR /rest
+COPY . /rest
+
+CMD  python3 rest-server.py
+
+# docker run -d --name demucs-redis -p 6379:6379 redis
+# docker run -d --name rest-server -p 8080:8080 demucs-rest

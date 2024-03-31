@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  selector:
+    matchLabels:
+      app: worker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+      - name: demucs-worker
+        image: docker.io/sachi097/demucs-worker
+        imagePullPolicy: Always
+        env:
+          - name: MINIO_HOST
+            value: "minio:9000"
+          - name: REDIS_HOST
+            value: "redis"
+        resources:
+          requests:
+            memory: "5Gi"
+            cpu: "4000m"
+          limits:
+            memory: "5Gi"
+            cpu: "4000m"
+        ports:
+        - containerPort: 5230
